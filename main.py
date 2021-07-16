@@ -66,7 +66,7 @@ def mag_pin(path):
                 if line_count == 0:
                     line_count += 1
                 else:
-                    if row[1] == "M" or "P":
+                    if row[1] != "F/O":
                         # grab contents of row
                         entry = [row[0], row[1], row[2], row[3], row[4]]
                         for x in range(int(row[2])):
@@ -78,4 +78,5 @@ if __name__ == '__main__':
     #droppedFile = sys.argv[1]
     droppedFile = "SampleFile.csv"
     print("File recieved")
+    print(droppedFile)
     main(droppedFile)
