@@ -10,14 +10,14 @@ from pdfrw import PdfWriter
 
 def main(droppedFile):
     filename = os.path.basename(droppedFile)
-    fold(filename)
-    mag_pin(filename)
+    organize(filename)
     print("done")
 
 
-def fold(path):
+def organize(path):
     original = PdfReader(path)
-    output = PdfWriter()
+    outputFold = PdfWriter()
+    outputPin = PdfWriter()
     pageCount = 0
 
     with open("namelist.csv") as csv_file:
@@ -27,36 +27,16 @@ def fold(path):
             if line_count == 0:
                 line_count += 1
             else:
-                if row[1] == "F/O":
-                    # grab contents of row
-                    page = original.pages[pageCount]
-                    for x in range(int(row[2])):
-                        output.addpage(page)
+                page = original.pages[pageCount]
+                for x in range(int(row[2])):
+                    if row[1] == "F/O":
+                        outputFold.addpage(page)
+                    elif row[1] != "F/O":
+                        outputPin.addpage(page)
                 pageCount += 1
 
-    output.write("output/fold_output.pdf")
-
-
-def mag_pin(path):
-    original = PdfReader(path)
-    output = PdfWriter()
-    pageCount = 0
-
-    with open("namelist.csv") as csv_file:
-        csv_reader = csv.reader(csv_file, delimiter=',')
-        line_count = 0
-        for row in csv_reader:
-            if line_count == 0:
-                line_count += 1
-            else:
-                if row[1] != "F/O":
-                    # grab contents of row
-                    page = original.pages[pageCount]
-                    for x in range(int(row[2])):
-                        output.addpage(page)
-                pageCount += 1
-
-    output.write("output/mag_pin_output.pdf")
+    outputFold.write("output/fold_output.pdf")
+    outputPin.write("output/mag_pin_output.pdf")
 
 
 if __name__ == '__main__':
