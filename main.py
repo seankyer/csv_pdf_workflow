@@ -28,10 +28,14 @@ def organize(path):
                 line_count += 1
             else:
                 page = original.pages[pageCount]
-                for x in range(int(row[2])):
-                    if row[1] == "F/O":
+                if row[3] != "":
+                    for x in range(int(row[3])):
                         outputFold.addpage(page)
-                    elif row[1] != "F/O":
+                if row[2] != "":
+                    for x in range(int(row[2])):
+                        outputPin.addpage(page)
+                if row[1] != "":
+                    for x in range(int(row[1])):
                         outputPin.addpage(page)
                 pageCount += 1
 
@@ -41,6 +45,6 @@ def organize(path):
 
 if __name__ == '__main__':
     # droppedFile = sys.argv[1]
-    droppedFile = "Sample_PDF.pdf"
+    droppedFile = "test.pdf"
     print("File received")
     main(droppedFile)
