@@ -39,6 +39,9 @@ def organize(path):
                         outputPin.addpage(page)
                 pageCount += 1
 
+    if not os.path.isdir("output"):
+        os.mkdir("output")
+
     outputFold.write("output/fold_output.pdf")
     outputPin.write("output/mag_pin_output.pdf")
 
